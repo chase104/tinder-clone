@@ -1,0 +1,38 @@
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  border-bottom: 1px solid #f9f9f9;
+  margin: 0px 5vw;
+  height: 8vh
+}
+.header__logo{
+  object-fit:contain;
+  height: 40px;
+}
+.logo-title{
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 8px;
+  margin-right: 8px
+}
+.logo-container{
+  display: flex;
+  align-items: center;
+}
+.button-holder{
+  height: inherit;
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+}
+.button-holder:hover{
+  background-color: #f2f2f2;
+}
+.darker{
+  background-color: #d9d9d9 !important
+}
+.button{
+  font-size: 20px
+}

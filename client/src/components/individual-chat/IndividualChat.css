@@ -1,0 +1,60 @@
+.chatHolder{
+  margin: 5vh 15vw;
+  height: 86vh;
+  display: flex;
+flex-direction: column;
+}
+.matchDetails{
+  color: grey;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4vh;
+    font-size: 20px;
+}
+.messageHolderMatched{
+  display: flex;
+  justify-content: flex-start;
+  padding: 4px 0;
+
+}
+.messageHolderUser{
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 0;
+}
+.messageMatched{
+  width: auto;
+border-radius: 15px;
+background-color: lightgrey;
+padding: 8px 16px;
+margin-left: 4px
+}
+.messageUser{
+  width: auto;
+border-radius: 15px;
+background-color: #29b3cd;
+padding: 8px 16px;
+color: white
+}
+.chatInputForm{
+  display: flex;
+  justify-content: center;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  height: 5vh;
+  margin-top: auto;
+}
+.chatInputForm input:focus{
+  outline: none
+}
+.chatInput{
+  width: 90%;
+  border: none;
+  font-size: 20px;
+  margin-left: 1vw
+}
+.chatInputButton{
+  margin-left: auto;
+  border-radius: 10px;
+  width: 10%;
+}
