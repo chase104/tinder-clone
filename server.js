@@ -119,6 +119,11 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
+app.get('/get-account', (req, res) => {
+  UserModel.findOne({email: req.user.email}, (err, account) => {
+    res.send(account)
+  })
+})
 app.get('/logout', (req, res) => {
   req.logOut();
   res.json({loggedIn: false})

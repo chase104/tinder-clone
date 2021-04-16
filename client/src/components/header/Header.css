@@ -1,11 +1,11 @@
 .header{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   z-index: 100;
   border-bottom: 1px solid #f9f9f9;
-  margin: 0px 5vw;
-  height: 8vh
+  height: 8vh;
+  width: 90vw !important;
+  margin-left: 5vw
 }
 .header__logo{
   object-fit:contain;
@@ -26,9 +26,19 @@
   padding: 0px 8px;
   display: flex;
   align-items: center;
+
+}
+.button-container{
+  display: flex;
+justify-content: flex-end;
 }
 .button-holder:hover{
   background-color: #f2f2f2;
+}
+.center-grid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .darker{
   background-color: #d9d9d9 !important

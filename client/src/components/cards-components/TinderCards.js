@@ -63,7 +63,7 @@ function TinderCards() {
           >
             <div className="card">
               {getImage(person._id)}
-              <h3 style={{backgroundColor:"rgba(89, 89, 89, .7)", borderRadius: "20px", padding: "5px"}}>{person.name}</h3>
+              <h3 style={{backgroundColor:"rgba(89, 89, 89, .9)", borderRadius: "20px", padding: "5px"}}>{person.name}</h3>
             </div>
           </TinderCard>
         )

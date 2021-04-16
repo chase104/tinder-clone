@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
 export const AppContext = createContext(null)
@@ -8,16 +8,25 @@ export function AppProvider ({children}) {
   const [state, setState] = useState({
     loggedIn: null
   })
-  if (state.loggedIn === null) {
+
+  useEffect(() => {
     axios({
       method: "GET",
-      url: "/check"
+      url: "check"
     }).then((res) => {
-      setState({
-        loggedIn: res
-      })
+      console.log(res);
+      if (res.data.user === false){
+        setState({
+          loggedIn: false
+        })
+      } else {
+        setState({
+          loggedIn: true
+        })
+      }
     })
-  }
+  }, [window.location])
+
   return (
     <AppContext.Provider
     value={{state, setState}}

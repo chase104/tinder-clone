@@ -1,17 +1,22 @@
 import './App.css';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 
 // providers
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { AppProvider } from './context.js'
 //  pages
 
+import LoggedInRoute from './routes/LoggedInRoute.js'
+import LoggedOutRoute from './routes/LoggedOutRoute.js'
 import Header from './components/header/Header.js'
 import Dashboard from './pages/Dashboard'
 import ChatsPage from './pages/ChatsPage'
 import IndividualChat from './components/individual-chat/IndividualChat.js'
 import NewUser from './pages/NewUser'
 import Login from './pages/Login'
+import Account from './pages/Account'
+
+
 
 const theme = createMuiTheme({
   palette: {
@@ -37,13 +42,17 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
         <AppProvider>
-          <Route path="/" component={Header} />
+          <Route component={Header} />
           <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route exact path="/chat" component={ChatsPage} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/chat/:person" component={IndividualChat} />
-            <Route exact path="/newuser" component={NewUser} />
+            <LoggedOutRoute exact path="/">
+                <Redirect to="/login" />
+            </LoggedOutRoute>
+            <LoggedInRoute path="/home" component={Dashboard} />
+            <LoggedInRoute path="/chat" component={ChatsPage} />
+            <LoggedInRoute path="/account" component={Account} />
+            <LoggedInRoute path="/chat/:person" component={IndividualChat} />
+            <LoggedOutRoute path="/login" component={Login} />
+            <LoggedOutRoute path="/newuser" component={NewUser} />
           </Switch>
         </AppProvider>
         </ThemeProvider>
