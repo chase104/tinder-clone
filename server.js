@@ -62,6 +62,23 @@ mongoose.connect(connection_url, {
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Api Endpoints
 app.post("/newuser", async (req, res) => {
     const { name, email, password } = req.body
