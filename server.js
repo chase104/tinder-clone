@@ -62,7 +62,11 @@ mongoose.connect(connection_url, {
 })
 
 
-
+if (process.env.NODE_ENV === "production") {
+  //server static content
+  //npm run build
+  app.use(express.static(path.join(__dirname, "client/build")));
+}
 
 
 
@@ -207,6 +211,10 @@ app.get('/get-image/:id', async (req, res) => {
   res.type("Content-Type", user.img.ContentType);
   res.status(200).send(user.img.Data)
 })
+
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 //Listener
 app.listen(port, () => {
