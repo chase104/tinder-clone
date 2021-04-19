@@ -12,6 +12,7 @@ import UserModel from './userModel.js'
 import Cors from 'cors'
 import fileupload from "express-fileupload"
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 
 // App Config
@@ -215,6 +216,7 @@ app.get('/get-image/:id', async (req, res) => {
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
+
 
 //Listener
 app.listen(port, () => {
