@@ -1,8 +1,8 @@
-import local from 'passport-local'
-import bcrypt from 'bcrypt'
-import UserModel from './userModel.js'
+const local = require('passport-local')
+const bcrypt = require('bcrypt')
+const UserModel = require('./userModel.js')
 
-export default function(passport) {
+module.exports = function(passport) {
   const localStrategy = local.Strategy
   passport.use(
     new localStrategy({usernameField: 'email'}, async(email, password, done) => {

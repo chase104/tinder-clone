@@ -1,18 +1,18 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import dotenv from 'dotenv'
-dotenv.config()
-import multer  from 'multer'
-import bcrypt from "bcrypt"
-import passport from 'passport'
-import session from 'express-session'
-import initializePassport from './passport-config.js'
-import CardModel from './dbCards.js'
-import UserModel from './userModel.js'
-import Cors from 'cors'
-import fileupload from "express-fileupload"
-import cookieParser from 'cookie-parser'
-import path from 'path'
+const express = require('express')
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+require('dotenv').config()
+const multer  = require('multer')
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const session = require('express-session')
+const initializePassport = require('./passport-config.js')
+const CardModel = require('./dbCards.js')
+const UserModel = require('./userModel.js')
+const Cors = require('cors')
+const fileupload = require('express-fileupload')
+const cookieParser = require('cookie-parser')
+const path = require('path')
 
 
 // App Config
