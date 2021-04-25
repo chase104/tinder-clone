@@ -48,7 +48,7 @@ function App() {
                 <Redirect to="/login" />
             </LoggedOutRoute>
             <LoggedInRoute path="/home" component={Dashboard} />
-            <LoggedInRoute path="/chat" component={ChatsPage} />
+            <LoggedInRoute path="/chats" component={ChatsPage} />
             <LoggedInRoute path="/account" component={Account} />
             <LoggedInRoute path="/chat/:person" component={IndividualChat} />
             <LoggedOutRoute path="/login" component={Login} />

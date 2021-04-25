@@ -97,7 +97,7 @@ function Header(props) {
           <Link className={buttonStateOne == false ? "button-holder" : "button-holder darker"} onMouseDown={() => buttonClick("one")} onMouseUp={() => buttonClick()} onClick={() => handleLogout()}>
             <div className="button">Logout</div>
           </Link>
-          <Link to="/chat">
+          <Link to="/chats">
             <IconButton>
               <ForumIcon fontSize="large" className="header_icon"/>
             </IconButton>

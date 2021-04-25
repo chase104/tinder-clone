@@ -3,9 +3,9 @@ import './Chat.css'
 import Avatar from '@material-ui/core/Avatar'
 import { Link } from 'react-router-dom'
 
-const Chat = ({message, name, profilePic, timestamp}) => {
+const Chat = ({message, name, id, profilePic, timestamp}) => {
   return (
-    <Link to={`/chat/${name}`}>
+    <Link to={`/chat/${id}`}>
       <div className="chat">
         <Avatar className="chat_image" alt={name} src={profilePic} />
         <div className="nameAndMessageHolder">

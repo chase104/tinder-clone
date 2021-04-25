@@ -72,7 +72,7 @@ const Account = () => {
               className="loader-item"
               height={200}
               width={200}
-              timeout={10000}
+              timeout={100000}
               />
           }
         </div>

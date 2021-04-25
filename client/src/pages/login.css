@@ -1,0 +1,67 @@
+.modal-container {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 80%;
+  height: 50vh;
+  position: relative;
+  margin-top: 20vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+.modal-title {
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  padding: 4vh 0vh;
+}
+.columns {
+  display: flex;
+  height: 40vh;
+  border-top: 1px solid black;
+}
+.column-one {
+  width: 50%;
+  border-right: 1px black solid;
+}
+.top-row {
+  display: flex;
+}
+.one {
+  margin-left: 8px;
+  padding: 10px 20px;
+  border-radius: 50%;
+  background: #004aad;
+  color: white;
+  margin-top: 8px;
+  font-size: 50px;
+  font-weight: bold;
+}
+.column-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+  font-size: 50px;
+}
+.column-content {
+  padding: 40px 20px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.column-content .title {
+  width: fit-content;
+  margin-right: 40px;
+  font-weight: bold;
+}
+.sign-in {
+  font-size: 90px;
+  color: #004aad;
+  cursor: pointer;
+}
+.column-two {
+  width: 50%;
+}
