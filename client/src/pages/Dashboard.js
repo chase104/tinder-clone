@@ -11,7 +11,6 @@ const Dashboard = () => {
       {/* Tinder Cards */}
       <TinderCards />
       {/* SwipeButtons */}
-      <SwipeButtons />
 
     </div>
   )

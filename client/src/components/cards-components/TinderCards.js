@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import TinderCard from "react-tinder-card"
 import axios from 'axios'
 import './TinderCards.css'
@@ -8,6 +8,7 @@ import Loader from "react-loader-spinner";
 function TinderCards() {
 
   const [people, setPeople] = useState([])
+  const [peopleLeft, setPeopleLeft] = useState([])
   const [loaderState, setLoaderState] = useState(true)
 
   useEffect(() => {
@@ -18,6 +19,7 @@ function TinderCards() {
         url: "/tinder/cards"
       })
       setPeople(req.data);
+      setPeopleLeft(req.data)
     }
     fetchData();
   }, [])
@@ -37,6 +39,7 @@ function TinderCards() {
 
   const outOfFrame = (dir, name, personId) => {
     console.log(name + " left the screen! ", dir, personId);
+    setPeopleLeft(peopleLeft.pop())
     if (dir === "right") {
       console.log("it's a match!")
       axios({
@@ -61,7 +64,10 @@ function TinderCards() {
   return (
     <div className="tinderCards">
       <div className="tinderCards__cardContainer">
-        { people.length >= 1 ? people.map((person) => {
+        { people.length >= 1 ? 
+          
+          people.map(
+            (person) => {
           console.log(person);
           return (
           <TinderCard
@@ -75,24 +81,24 @@ function TinderCards() {
               <h3 style={{backgroundColor:"rgba(89, 89, 89, .9)", borderRadius: "20px", padding: "5px"}}>{person.name}</h3>
             </div>
           </TinderCard>
-        )
-        }
-
-) :
-        <div className="loader">
-          { loaderState ?
-              <Loader
-              type="TailSpin"
-              color="#004aad"
-              className="loader-item"
-              height={200}
-              width={200}
-              timeout={10000}
-              />
-            :
-            <div style={{fontSize: "24px", fontWeight: "bold"}}>Connection error, please refresh page</div>
+          ) 
           }
-        </div>
+          ) 
+          :
+          <div className="loader">
+            { loaderState ?
+                <Loader
+                type="TailSpin"
+                color="#004aad"
+                className="loader-item"
+                height={200}
+                width={200}
+                timeout={10000}
+                />
+              :
+              <div style={{fontSize: "24px", fontWeight: "bold"}}>Connection error, please refresh page</div>
+            }
+          </div>
 
       }
         </div>
