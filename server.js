@@ -13,22 +13,23 @@ const Cors = require('cors')
 const fileupload = require('express-fileupload')
 const cookieParser = require('cookie-parser')
 const path = require('path')
+const userModel = require('./userModel.js')
+const chatModel = require('./chatModel.js')
 
 
 // App Config
 const app = express();
 
+
 initializePassport(
   passport,
   (email) => {
      UserModel.findOne({email: email}).then((user) => {
-       console.log('returning user');
        return user
      })
   },
   (id) => {
      UserModel.findOne({_id: id}).then((user) => {
-       console.log('returning user');
        return user
      })
   },
@@ -61,6 +62,15 @@ mongoose.connect(connection_url, {
   useCreateIndex: true,
   useUnifiedTopology: true
 })
+var Message = mongoose.model('Message', {name: String, message: String})
+
+
+
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server)
+io.on('connection', () => {     });
+server.listen(4000)
 
 
 if (process.env.NODE_ENV === "production") {
@@ -70,27 +80,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Api Endpoints
 app.post("/newuser", async (req, res) => {
     const { name, email, password } = req.body
     let hashedPassword = await bcrypt.hash(password, 10);
     UserModel.findOne({email: email}, async function(err, existingAccount){
       if (existingAccount !== null) {
-        console.log("account exists");
         res.status(200).send({message: "Email already linked to an account"})
       } else {
           const { data, mimetype } = req.files.image
@@ -107,7 +102,6 @@ app.post("/newuser", async (req, res) => {
             if (err) {
               res.status(500).send(err)
             } else {
-              console.log("success");
               res.status(200).send({newAccount: true})
             }
           })
@@ -115,10 +109,26 @@ app.post("/newuser", async (req, res) => {
       })
 })
 
+
+app.get('/messages', (req, res) => {
+  Message.find({},(err, messages)=> {
+    res.send(messages);
+  })
+})
+
+app.post('/messages', (req, res) => {
+  var message = new Message(req.body);
+  message.save((err) =>{
+    if(err)
+      sendStatus(500);
+    res.sendStatus(200);
+  })
+})
+
+
+
 app.post("/login", (req, res, next) => {
-  console.log(req.body);
   passport.authenticate("local", (err, user, info) => {
-    console.log("info: ", info);
     if (err) throw err;
     if (!user)
       res.json({
@@ -127,7 +137,6 @@ app.post("/login", (req, res, next) => {
       });
     else {
       req.logIn(user, err => {
-        console.log("userr: ", user.id);
         if (err){
           console.log(err);
         } else {
@@ -151,11 +160,11 @@ app.get('/logout', (req, res) => {
   res.json({loggedIn: false})
 })
 app.get('/check', (req, res) => {
-  console.log("running check");
-  console.log(req.user);
   if (req.user) {
     res.json({
-      user: true
+      user: true,
+      name: req.user.name,
+      id: req.user.id
     });
   } else {
     res.json({
@@ -191,7 +200,6 @@ app.get('/tinder/cards', (req, res) => {
       res.status(500).send(err)
     } else {
         let finalData = []
-      console.log(data);
       data.map((user) => {
         let arrayItem = {
           _id: user._id,
@@ -203,15 +211,77 @@ app.get('/tinder/cards', (req, res) => {
     }
   })
 })
+app.put('/tinder/match', async (req, res) => {
+  console.log(req.body);
+  const {name, personId} = req.body;
+  const swiperId = req.user.id;
+  const swiperName = req.user.name;
+
+  let alreadyMatched = false;
+
+  const checkIfAlreadyMatched = () => {
+    const matchArray = req.user.matches;
+    let i = 0;
+    while (alreadyMatched === false && i < matchArray.length){
+      matchArray[i].userId === personId ? alreadyMatched = true : i++;
+    };
+  }
+  await checkIfAlreadyMatched()
+
+  // if (alreadyMatched) {
+    if (false){
+    console.log('ALREADY MATCHED');
+    res.status(300).json({
+      error: "already matched"
+    })
+  } else {
+    let matchedUser = await userModel.findOne({_id: personId})
+    let alsoSwiped = false;
+    let chat;
+    let matchIndex = 0;
+    matchedUser.matches.map((match) => {
+      if (match.userId === swiperId) {
+        alsoSwiped = true;
+      } else if (alsoSwiped === false) {
+        matchIndex++
+      }
+      
+    })
+  
+    if (alsoSwiped) {
+      const newChat = {
+        users: {
+          [personId]: name,
+          [swiperId]: swiperName
+        },
+        messages: []
+      };
+      chat = await chatModel(newChat).save()
+      console.log("matchIndex: ", matchIndex);
+      const propertyName = `matches.${matchIndex}.chatId`
+      let finalPropertyName = propertyName.toString()
+      console.log(finalPropertyName, chat._id);
+      await userModel.updateOne({_id: personId}, {[finalPropertyName]: chat._id})
+    }
+    let matchContent = { name , userId: personId, chatId: chat._id }
+    const result = await userModel.updateOne({_id: swiperId}, {$push: { matches: matchContent }}, {new: true})
+  }
+
+})
 
 app.get('/get-image/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const user = await UserModel.findById({ _id: id });
   if (!user) return sendStatus(404)
   res.type("Content-Type", user.img.ContentType);
   res.status(200).send(user.img.Data)
 })
+
+app.get('/get-chats', (req, res) => {
+  console.log(req.user.id);
+  res.json(req.user)
+})
+
 
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));

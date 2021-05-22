@@ -24,7 +24,8 @@ function TinderCards() {
 
   useEffect(() => {
     console.log(people);
-  }, [people])
+  }, [people]);
+
   useEffect(() => {
     setTimeout(() => {
       setLoaderState(false)
@@ -33,12 +34,21 @@ function TinderCards() {
 
   console.log(people);
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
-    // setLastdirection(direction)
-  }
-  const outOfFrame = (name) => {
-    console.log(name + " left the screen!");
+
+  const outOfFrame = (dir, name, personId) => {
+    console.log(name + " left the screen! ", dir, personId);
+    if (dir === "right") {
+      console.log("it's a match!")
+      axios({
+        method: "PUT",
+        url: "/tinder/match",
+        data: {name, personId}
+      }).then((res) => {
+        console.log(res);
+      })
+    } else {
+      console.log(" oh no ! ");
+    }
   }
 
   const getImage = (id) => {
@@ -58,8 +68,7 @@ function TinderCards() {
           className="swipe"
           key={person.name}
           preventSwipe={["up", "down"]}
-          onSwipe={(dir) => swiped(dir, person.name)}
-          onCardLeftScreen={() => outOfFrame(person.name)}
+          onCardLeftScreen={(dir) => outOfFrame(dir, person.name, person._id)}
           >
             <div className="card">
               {getImage(person._id)}

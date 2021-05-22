@@ -73,10 +73,10 @@ function Header(props) {
 
   return (
     <Grid container className="header">
-      <Grid item xd={4} sm={4} md={4}>
+      <Grid item xs={4} sm={4} md={4}>
         {loggedIn ? returnFirst() : <div></div>}
       </Grid>
-      <Grid item xd={4} sm={4} md={4} className="center-grid">
+      <Grid item xs={4} sm={4} md={4} className="center-grid">
         <Link to="/home">
           <div className="logo-container">
             <div className="logo-title">Find</div>
@@ -89,7 +89,7 @@ function Header(props) {
           </div>
         </Link>
       </Grid>
-      <Grid item xd={4} sm={4} md={4} className="button-container">
+      <Grid item xs={4} sm={4} md={4} className="button-container">
       {
         loggedIn === null ? <div></div> :
         loggedIn === true ?

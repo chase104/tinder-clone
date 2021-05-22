@@ -15,6 +15,7 @@ import IndividualChat from './components/individual-chat/IndividualChat.js'
 import NewUser from './pages/NewUser'
 import Login from './pages/Login'
 import Account from './pages/Account'
+import MongoChat from './pages/mongochat/index.js'
 
 
 
@@ -48,6 +49,8 @@ function App() {
                 <Redirect to="/login" />
             </LoggedOutRoute>
             <LoggedInRoute path="/home" component={Dashboard} />
+            <LoggedInRoute path="/mongochat" component={MongoChat} />
+
             <LoggedInRoute path="/chats" component={ChatsPage} />
             <LoggedInRoute path="/account" component={Account} />
             <LoggedInRoute path="/chat/:person" component={IndividualChat} />
