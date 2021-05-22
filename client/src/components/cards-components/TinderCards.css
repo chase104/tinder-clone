@@ -38,3 +38,13 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+@media (max-width: 600px) {
+  .card {
+    width: 80vw;
+    height: 36vh;
+  }
+  .MuiIconButton-root {
+    padding: 4px;
+  }
+}

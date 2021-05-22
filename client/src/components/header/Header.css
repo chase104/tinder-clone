@@ -46,6 +46,10 @@
   font-size: 20px;
 }
 @media (max-width: 600px) {
+  .card {
+    width: 44vw;
+    height: 36vh;
+  }
   .header {
     width: 98vw !important;
     margin-left: 1vw;
