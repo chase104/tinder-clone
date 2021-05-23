@@ -57,8 +57,8 @@ const Login = (props) => {
     await axios({
       method: "POST",
       data: {
-        email: "w@w",
-        password: "w"
+        email: "c@c",
+        password: "c"
       },
       withCredentials: true,
       url: "/login"

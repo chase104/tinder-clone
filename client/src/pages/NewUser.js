@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 });
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginFileEncode);
 
-const NewUser = () => {
+const NewUser = (props) => {
   const classes = useStyles()
   const [pond, setPond] = useState()
   const [image, setImage] = useState(null)
@@ -87,6 +87,8 @@ const NewUser = () => {
           errorPresent: true,
           message: message
         })
+      } else {
+         props.history.push('/login')
       }
     })
     }
